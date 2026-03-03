@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Aarya 💖</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+    overflow: hidden;
+    text-align: center;
+    color: #333;
+}
+
+.screen { display: none; padding: 20px; }
+.active { display: block; }
+
+h1 { color: #ff2e63; }
+
+button {
+    padding: 12px 22px;
+    margin: 10px;
+    border: none;
+    border-radius: 25px;
+    background: #ff2e63;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+button:hover { background: #e0004d; }
+
+.heart {
+    position: absolute;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: sparkleAnim 3s linear infinite;
+}
+
+@keyframes sparkleAnim {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-100vh); opacity: 0; }
+}
+
+</style>
+</head>
+<body>
+
+<audio autoplay loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+</audio>
+
+<!-- Welcome Screen -->
+<div id="welcome" class="screen active">
+    <h1>Hey Aarya 💕</h1>
+    <p>Krishna made something for you...</p>
+    <p>Warning: High level of cuteness ahead 😌</p>
+    <button onclick="startGame()">Enter 💖</button>
+</div>
+
+<!-- Game 1 -->
+<div id="game" class="screen">
+    <h2>Aarya Catch Krishna’s Hearts 💗</h2>
+    <p>Catch 6 hearts to unlock apology</p>
+    <p>Score: <span id="score">0</span>/6</p>
+    <div id="gameArea" style="height:60vh;"></div>
+</div>
+
+<!-- Joke Section -->
+<div id="jokes" class="screen">
+    <h2>Only Aarya Will Understand 😌</h2>
+    <p>Remember when you said "I'm not talking to you" but still texted after 5 minutes? 😂</p>
+    <p>And how you pretend to be angry but you're actually the cutest human alive? 🥺</p>
+    <p>No matter what happens... Krishna still chooses YOU 💖</p>
+    <button onclick="finalScreen()">Continue 💕</button>
+</div>
+
+<!-- Final Apology -->
+<div id="final" class="screen">
+    <h1>I'm Sorry, Aarya 💛</h1>
+    <p>
+        I know I messed up.  
+        Maybe I was stupid.  
+        Maybe I was egoistic.  
+        But one thing is true —  
+        I never wanted to hurt you.
+        <br><br>
+        You matter to me. A lot.  
+        More than my attitude.  
+        More than my pride.
+    </p>
+
+    <h2>Will You Forgive Me? 💍</h2>
+    <button onclick="forgiven()">Yes Krishna 💖</button>
+    <button id="runBtn">No 😜</button>
+</div>
+
+<script>
+
+let score = 0;
+
+function startGame(){
+    switchScreen("welcome","game");
+    spawnHeart();
+}
+
+function switchScreen(hide,show){
+    document.getElementById(hide).classList.remove("active");
+    document.getElementById(show).classList.add("active");
+}
+
+function spawnHeart(){
+    if(score >= 6){
+        switchScreen("game","jokes");
+        return;
+    }
+
+    const heart=document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML="💖";
+    heart.style.left=Math.random()*90+"%";
+    heart.style.top=Math.random()*60+"%";
+
+    heart.onclick=function(){
+        score++;
+        document.getElementById("score").innerText=score;
+        heart.remove();
+        spawnHeart();
+    }
+
+    document.getElementById("gameArea").appendChild(heart);
+}
+
+function finalScreen(){
+    switchScreen("jokes","final");
+}
+
+function forgiven(){
+    alert("Krishna is officially the happiest person alive because of Aarya 💕");
+}
+
+const runBtn=document.getElementById("runBtn");
+runBtn.addEventListener("mouseover",()=>{
+    runBtn.style.position="absolute";
+    runBtn.style.left=Math.random()*80+"%";
+    runBtn.style.top=Math.random()*80+"%";
+});
+
+// Sparkles
+setInterval(()=>{
+    const sparkle=document.createElement("div");
+    sparkle.classList.add("sparkle");
+    sparkle.style.left=Math.random()*100+"%";
+    sparkle.style.top="100%";
+    document.body.appendChild(sparkle);
+    setTimeout(()=>sparkle.remove(),3000);
+},200);
+
+</script>
+
+</body>
+</html>
